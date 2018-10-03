@@ -1,17 +1,3 @@
-/**
-Write clear code, use standard containers whenever possible and avoid wasting memory.
-
-Time constraints:
-- addEdge must run in amortized constant time;
-
-2. Implement the following methods:*/
-
-/**
-* Returns the list of nodes in a cycle that starts at the given node.
-* The nodes are in the order that they appear in the cycle, starting with startNode and ending with the one immediately preceding it.
-* If the node is not part of a cycle, the method returns an empty vector.
-*/
-
 #include <iostream>
 #include <limits>
 
@@ -87,12 +73,12 @@ float Graph::getMinWeight(size_t a, size_t b) const {
 * returns ∞ if no such edge exists
 */
 float Graph::getMaxWeight(size_t a, size_t b) const {
-    float maxWeight = std::numeric_limits<float>::infinity(); 
+    float maxWeight = std::numeric_limits<float>::lowest(); 
 
     const Node& n = m_nodes[a]; 
 
     for(const Edge& e : n.m_edges) {
-        if(e.m_weight < maxWeight) {
+        if(e.m_weight > maxWeight) {
             maxWeight = e.m_weight; 
         }
     }

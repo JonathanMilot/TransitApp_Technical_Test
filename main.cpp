@@ -63,5 +63,8 @@ int main() {
     cycle = g.getCycle(8);
     printCycle(cycle, g); 
 
+    cout << "Max weight between 3 and 4" << endl; 
+    cout << "Max weight:" << g.getMaxWeight(3, 4) << endl;
+
     return 0;
 }
