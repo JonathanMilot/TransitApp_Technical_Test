@@ -4,7 +4,3 @@ EXEC=a.out
 
 all: main.o graph.o
 	$(CC) -o $(EXEC) main.o graph.o
-
-clean:
-	rm *.o
-	rm $(EXEC)

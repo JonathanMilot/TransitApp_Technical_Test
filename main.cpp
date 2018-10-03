@@ -4,9 +4,9 @@
 
 using namespace std;
 
-void printCycle(vector<size_t>& cycle, Graph& g){
+void printCycle(vector<size_t>& cycle, Graph& g) {
     cout << "\""; 
-    for(auto n : cycle){
+    for(auto n : cycle) {
         cout << n << "->";
     }
     cout << "\""; 
@@ -15,8 +15,7 @@ void printCycle(vector<size_t>& cycle, Graph& g){
     cout << endl; 
 }
 
-int main() 
-{
+int main() {
     cout << "== Initialisation ==" << endl;
 
     Graph g(15);

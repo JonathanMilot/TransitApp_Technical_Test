@@ -45,6 +45,6 @@ class Graph {
         std::vector<Node> m_nodes; 
 
         bool isValidNodeIndex(size_t n) const; 
-        bool findCycle(size_t currentNodeId, bool visited[], std::vector<size_t>& inCurrentCycle, size_t startNode) const;
-        bool findCycleNegative(size_t currentNodeId, bool visited[], std::vector<size_t>& inCurrentCycle, size_t startNode) const;
+        bool findCycle(size_t currentNodeId, bool visited[], std::vector<size_t>& cycle, size_t startNode) const;
+        bool findCycleNegative(size_t currentNodeId, bool visited[], std::vector<size_t>& cycle, size_t startNode) const;
 };

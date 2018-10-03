@@ -32,7 +32,7 @@ Graph::Graph(size_t numberOfNodes){
 }
 
 /**
-* Helper functions for checking node index validity
+* Helper function for checking node index validity
 */
 bool Graph::isValidNodeIndex(size_t n) const{
     if(n >= m_nodes.size()){
@@ -104,25 +104,27 @@ float Graph::getMaxWeight(size_t a, size_t b) const {
  * Helper recursive function for finding cycle.
  */ 
 
-bool Graph::findCycle(size_t currentNodeId, bool visited[], std::vector<size_t>& currentCycle, size_t startNode) const { 
+bool Graph::findCycle(size_t currentNodeId, bool visited[], std::vector<size_t>& cycle, size_t startNode) const { 
     if(!visited[currentNodeId]) { 
 
         // Mark the current node as visited and part of the current cycle 
         visited[currentNodeId] = true; 
-        currentCycle.push_back(currentNodeId); 
+        cycle.push_back(currentNodeId); 
 
         // Recursion on all the edges
         for(const Edge& e : m_nodes[currentNodeId].m_edges) { 
             if (e.m_toNodeId == startNode) {
+                // Cycle found !
                 return true; 
             }
             else if (!visited[e.m_toNodeId] 
-                      && findCycle(e.m_toNodeId, visited, currentCycle, startNode) ) {
+                      && findCycle(e.m_toNodeId, visited, cycle, startNode) ) {
+                // Continue to explore graph
                 return true; 
             }
         } 
     } 
-    currentCycle.pop_back(); // remove the node from cycle 
+    cycle.pop_back(); // remove the node from cycle 
     return false; 
 } 
 
@@ -180,28 +182,28 @@ float Graph::getWeight(const std::vector<size_t>& nodes) const {
 /**
  * Helper recursive function for finding negative cycle.
  */ 
-bool Graph::findCycleNegative(size_t currentNodeId, bool visited[], std::vector<size_t>& currentCycle, size_t startNode) const { 
+bool Graph::findCycleNegative(size_t currentNodeId, bool visited[], std::vector<size_t>& cycle, size_t startNode) const { 
     if(!visited[currentNodeId]) { 
 
         // Mark the current node as visited and part of the current cycle 
         visited[currentNodeId] = true; 
-        currentCycle.push_back(currentNodeId);  
+        cycle.push_back(currentNodeId);  
 
         // Recursion on all the edges
         for(const Edge& e : m_nodes[currentNodeId].m_edges) { 
             if ( !visited[e.m_toNodeId] 
-                && findCycleNegative(e.m_toNodeId, visited, currentCycle, startNode)) {
+                && findCycleNegative(e.m_toNodeId, visited, cycle, startNode)) {
                 return true; 
             }
             else if (e.m_toNodeId == startNode
-                    && getWeight(currentCycle) < 0) {
+                    && getWeight(cycle) < 0) {
                 return true; 
             }
         } 
   
     } 
 
-    currentCycle.pop_back(); // remove the vertex from recursion stack 
+    cycle.pop_back(); // remove the vertex from recursion stack 
     return false; 
 } 
 
@@ -212,7 +214,7 @@ bool Graph::findCycleNegative(size_t currentNodeId, bool visited[], std::vector<
 std::vector<size_t> Graph::getNegativeWeightCycle() const {
     std::vector<size_t> cycle; 
 
-    for(const Node& n : m_nodes){
+    for(const Node& n : m_nodes) {
         size_t startNode = n.m_id; 
 
         if(!isValidNodeIndex(startNode)) {
@@ -227,6 +229,9 @@ std::vector<size_t> Graph::getNegativeWeightCycle() const {
         } 
 
         findCycleNegative(startNode, visited, cycle, startNode);
+
+        // Be sure to actually have a cycle before returning. 
+        // Else, try with an other node. 
         if(cycle.size() > 0) {
             return cycle; 
         }
