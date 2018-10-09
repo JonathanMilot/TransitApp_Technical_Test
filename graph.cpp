@@ -188,7 +188,8 @@ bool Graph::findCycleNegative(size_t currentNodeId, bool visited[], std::vector<
         } 
   
     } 
-
+    
+    visited[currentNodeId] = false; 
     cycle.pop_back(); // remove the vertex from recursion stack 
     return false; 
 } 
