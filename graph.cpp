@@ -5,6 +5,14 @@
 
 Graph::Graph(size_t numberOfNodes){
 
+    if(numberOfNodes > 32000){
+        std::cerr << "Graph::Graph - Trying to create a graph with more than 32000 nodes." << std::endl; 
+        std::cerr << "Requested number of nodes : " << numberOfNodes << std::endl;
+        std::cerr << "Nomber of nodes will be automatically shrinks to 32000." << std::endl;   
+
+        numberOfNodes = 32000; 
+    }
+
     // Since the exact finale size of nodes is known, 
     // it is directly reserve to avoid reallocation. 
     m_nodes.reserve(numberOfNodes); 
@@ -188,7 +196,7 @@ bool Graph::findCycleNegative(size_t currentNodeId, bool visited[], std::vector<
         } 
   
     } 
-    
+
     visited[currentNodeId] = false; 
     cycle.pop_back(); // remove the vertex from recursion stack 
     return false; 

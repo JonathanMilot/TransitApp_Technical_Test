@@ -44,7 +44,7 @@ int main() {
     g.addEdge(1, 5, -300); 
     g.addEdge(1, 5, 500); 
 
-
+    Graph g2(32001); 
     cout << "== End ==" << endl << endl;
 
     vector<size_t> cycle = g.getCycle(0);
